@@ -11,7 +11,7 @@ comments: false
 In this post, a variation of the ISMP is explored in which k resources are available. For example, the set of intervals might be computational tasks which have to run during specific intervals but can be executed on any of k available processing units.
 
 ## The greedy approach
-I won't give a formal proof. But lets think of the problem if there are n tasks and one resource. It is certain that the task which ends first is part of an optimal solution. So, it is selected. Now a set of n-1 tasks remain and the same argument holds, with the addition that the selected task can't overlap with any previously selected task. So the task with the earliest finish time that is compatible is selected, and so on.
+I don't have a formal proof. But lets think of the problem if there are n tasks and one resource. It is certain that the task which ends first is part of an optimal solution. So, it is selected. Now a set of n-1 tasks remain and the same argument holds, with the addition that the selected task can't overlap with any previously selected task. So the task with the earliest finish time that is compatible is selected, and so on.
 
 It becomes a bit more tricky if each task can be assigned to one of many available resources. To find an optimal solution, it is necessary to make a second greedy choice beyond picking the earliest finishing compatible task. Each selected task has to be assigned to the worst compatible resource, meaning the resource with the latest finishing task. The intuition is that you keep the "best" resources unoccupied for as long as possible and minimise wasted resource time. That way, tasks which finish later will be easier to assign to a resource.
 
@@ -31,4 +31,10 @@ def scheduling(available_resources, jobs):
 ```
 
 ## A coloring algorithm
-The problem can be framed as that of a maximal coloring of n intervals with k colors - intersecting intervals must be assigned a distinct color. Such an algorithm is described in [On the k-coloring of intervals](https://www.martincarlisle.com/publications/kcoloring.pdf) by Carlisle and Lloyd. The algorithm proceeds by maintaining...
+ISMP with k resources can be thought of as finding the maximal coloring of n intervals with k colors where intersecting intervals must recieve distinct colors. An O(k+n) algorithm of that type is described in a paper called *[On the k-coloring of intervals](https://www.martincarlisle.com/publications/kcoloring.pdf)*. The algorithm indirectly constructs an interval graph, a graph in which nodes are intervals and edges represent intersections between the intervals. The interval graph that is constructed is always k-colorable. It can always be colored with k colors such that no adjacent nodes have the same color, meaning that a k+1 clique of nodes never is allowed to form.
+
+
+### Resources
+- [Slides by Kevin Wayne](https://www.cs.princeton.edu/~wayne/kleinberg-tardos/pdf/04GreedyAlgorithmsI.pdf)
+- [On the k-coloring of intervals](https://www.martincarlisle.com/publications/kcoloring.pdf)
+- [Interval scheduling wiki](https://en.wikipedia.org/wiki/Interval_scheduling)
